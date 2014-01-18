@@ -11,8 +11,7 @@ deltar - automatically track changes as you work.
 
 # Will default to using the current directory as the watched directory
 # Modify as needed
-target_directories = [os.path.abspath("./"), ]
-target_directories = clean_directories(target_directories)
+targetDirectories = [os.path.abspath("./"), ]
 
 
 def find_and_add_new_files():
@@ -141,22 +140,38 @@ def check_if_git_setup():
 		exit()
 
 def push(branch="master"):
-	command = ["git", "push", "origin", "master"]
+	'''
+	Push to master, if there is an origin
+	'''
+	command = ["git", "push", "origin", branch]
 	output = subprocess.check_output(command)
 
+def has_remote(directory):
+	'''
+	Check if directory has remote
+	'''
+	command = ["git", "remote", "-v"]
+	output = subprocess.check_output(command)
+	if output: return True
+	else: return False
 
-target_directories = [directory for directory in target_directories if check_if_git_repo(directory)]
 
-print "Watching these directories: ", target_directories
+
+targetDirectories = clean_directories(targetDirectories)
+targetDirectories = [directory for directory in targetDirectories if check_if_git_repo(directory)]
+
+print "Watching these directories: ", targetDirectories
 time.sleep(2)
 
-def run(target_directories, checkDelay=60, pushDelay=120):
+def run(targetDirectories, checkDelay=60, pushDelay=120, remotePresent=False):
 	lastPush = time.time()
 	dirty = True
 
+	directories_lacking_remote = [directory for directory in targetDirectories if not has_remote(directory)]
+
 	while True:
-		for target_directory in target_directories:
-			os.chdir(target_directory)
+		for targetDirectory in targetDirectories:
+			os.chdir(targetDirectory)
 			deltas = subprocess.check_output(["git","ls-files","-mo"])
 			if deltas:
 				print "Changes since last commit:"
@@ -165,11 +180,13 @@ def run(target_directories, checkDelay=60, pushDelay=120):
 				find_and_add_new_files()
 				dirty = True
 			if not deltas and dirty:
-				print target_directory, " - Up to date"
+				print targetDirectory, " - Up to date"
 				if time.time() > lastPush+pushDelay:
-					print "Pushing to master"
-					push()
+					if targetDirectory not in directoriesLackingRemote:
+						print "Pushing to master..."
+						push()
+
 				dirty = False
 		time.sleep(checkDelay)
 
-run(target_directories)
+run(targetDirectories)
