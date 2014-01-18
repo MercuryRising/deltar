@@ -145,7 +145,7 @@ time.sleep(2)
 for d in target_directories:
 	print d, check_if_git_repo(d)
 
-PUSH_DELAY = 300
+PUSH_DELAY = 60
 lastPush = time.time()
 dirty = True
 
@@ -162,7 +162,7 @@ while True:
 		if not deltas and dirty:
 			print target_directory, " - Up to date"
 			if time.time() > lastPush+PUSH_DELAY:
-				print "Pushing to remote"
+				print "Pushing to master"
 				push()
 			dirty = False
 
