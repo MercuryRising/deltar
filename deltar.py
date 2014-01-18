@@ -67,7 +67,7 @@ def get_modified_lines(filePath):
 			commitMessage = "New binary file! This is probably not a good thing to add..."
 		elif int(added):
 			addedLines = get_added_lines(filePath)
-			commitMessage = "ADD:"+"|".join( (l.strip() for l in addedLines) )[:50]+"..."
+			commitMessage = "|".join( (l.strip() for l in addedLines) )[:50]+"..."
 		elif int(removed):
 			removedLines = get_removed_lines(filePath)
 			commitMessage = "REM:"+"|".join( (l.strip() for l in removedLines) )[:50]+"..."
@@ -166,7 +166,7 @@ time.sleep(2)
 def run(targetDirectories, checkDelay=60, pushDelay=120):
 	'''
 	Run deltar on targetDirectories
-	Wait checkDelay between checking files
+	Wait checkDelay between checking files for changes
 	Wait pushDelay between pushing to master
 	'''
 
