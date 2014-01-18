@@ -147,26 +147,26 @@ for d in target_directories:
 print "Watching these directories: ", target_directories
 time.sleep(2)
 
+def run(target_directories, checkDelay=60, pushDelay=120):
+	lastPush = time.time()
+	dirty = True
 
-PUSH_DELAY = 60
-lastPush = time.time()
-dirty = True
+	while True:
+		for target_directory in target_directories:
+			os.chdir(target_directory)
+			deltas = subprocess.check_output(["git","ls-files","-mo"])
+			if deltas:
+				print "Changes since last commit:"
+				print deltas.strip()
+				find_and_commit_modified_files()
+				find_and_add_new_files()
+				dirty = True
+			if not deltas and dirty:
+				print target_directory, " - Up to date"
+				if time.time() > lastPush+pushDelay:
+					print "Pushing to master"
+					push()
+				dirty = False
+		time.sleep(checkDelay)
 
-while True:
-	for target_directory in target_directories:
-		os.chdir(target_directory)
-		deltas = subprocess.check_output(["git","ls-files","-mo"])
-		if deltas:
-			print "Changes since last commit:"
-			print deltas.strip()
-			find_and_commit_modified_files()
-			find_and_add_new_files()
-			dirty = True
-		if not deltas and dirty:
-			print target_directory, " - Up to date"
-			if time.time() > lastPush+PUSH_DELAY:
-				print "Pushing to master"
-				push()
-			dirty = False
-
-	time.sleep(60)
+run(target_directories)
