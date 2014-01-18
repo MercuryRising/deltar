@@ -172,7 +172,7 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 
 	directoryData = {directory:{"lastpush":time.time(), "uptodate":False} for directory in targetDirectories}
 	for tarDir in targetDirectories:
-		directoryData[tarDir]['hasremote'] = has_remote(directory)
+		directoryData[tarDir]['hasremote'] = has_remote(tarDir)
 
 	while True:
 		for targetDirectory in targetDirectories:
