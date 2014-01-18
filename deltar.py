@@ -173,7 +173,7 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 	lastPush = time.time()
 	dirty = True
 
-	directories_lacking_remote = [directory for directory in targetDirectories if not has_remote(directory)]
+	directoriesLackingRemote = [directory for directory in targetDirectories if not has_remote(directory)]
 
 	while True:
 		for targetDirectory in targetDirectories:
@@ -188,6 +188,7 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 			if not deltas and dirty:
 				print targetDirectory, " - Up to date"
 				if time.time() > lastPush+pushDelay:
+					lastPush = time.time()
 					if targetDirectory not in directoriesLackingRemote:
 						print "Pushing to master..."
 						push()
