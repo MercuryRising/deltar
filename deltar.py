@@ -170,7 +170,7 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 	Wait pushDelay between pushing to master
 	'''
 
-	directoryData = {directory:{"lastpush":time.time(), "uptodate":False, "remind":True} for directory in targetDirectories}
+	directoryData = {directory:{"lastpush":time.time(), "uptodate":False, "remind":False} for directory in targetDirectories}
 	print directoryData
 	for tarDir in targetDirectories:
 		directoryData[tarDir]['hasremote'] = has_remote(tarDir)
