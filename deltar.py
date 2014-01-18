@@ -10,7 +10,7 @@ deltar - automatically track changes as you work.
 
 # Will default to using the current directory as the watched directory
 # Modify as needed
-targetDirectories = [os.path.abspath("./"), ]
+targetDirectories = [os.path.abspath("./"), "~/blog/"]
 
 
 def find_and_add_new_files():
