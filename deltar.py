@@ -5,6 +5,16 @@ import logging
 import time
 import re
 
+'''
+deltar - automatically track changes as you work.
+'''
+
+# Will default to using the current directory as the watched directory
+# Modify as needed
+target_directories = [os.path.abspath("./"), ]
+target_directories = clean_directories(target_directories)
+
+
 def find_and_add_new_files():
 	'''
 	Find files that are untracked by git
@@ -134,12 +144,6 @@ def push(branch="master"):
 	command = ["git", "push", "origin", "master"]
 	output = subprocess.check_output(command)
 
-
-# Default directory will be the directory deltar.py is run from
-# Change this to something else if you want, or just add target directories
-defaultDir = os.path.abspath("./")
-target_directories = [defaultDir]
-target_directories = clean_directories(target_directories)
 
 target_directories = [directory for directory in target_directories if check_if_git_repo(directory)]
 
