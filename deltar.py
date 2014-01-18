@@ -184,9 +184,13 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 				print deltas.strip()
 				find_and_commit_modified_files()
 				find_and_add_new_files()
-				directoryData['uptodate'] = True
-			if not deltas and directoryData[targetDirectory]['uptodate']:
+				directoryData[targetDirectory]['uptodate'] = True
+				directoryData[targetDirectory]['remind'] = True
+
+			if not deltas and directoryData[targetDirectory]['remind']:
 				print targetDirectory, " - Up to date"
+				directoryData[targetDirectory]['remind'] = False
+
 			if time.time() > directoryData[targetDirectory]['lastpush']+pushDelay:
 				if directoryData[targetDirectory]['hasremote']:
 					print "Pushing to master..."
