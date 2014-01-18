@@ -170,10 +170,9 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 	Wait pushDelay between pushing to master
 	'''
 
-	lastPush = time.time()
-	dirty = True
-
-	directoriesLackingRemote = [directory for directory in targetDirectories if not has_remote(directory)]
+	directoryData = {directory:{"lastpush":time.time(), "uptodate":False} for directory in targetDirectories}
+	for tarDir in targetDirectories:
+		directoryData[tarDir]['hasremote'] = has_remote(directory)
 
 	while True:
 		for targetDirectory in targetDirectories:
@@ -184,15 +183,14 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 				print deltas.strip()
 				find_and_commit_modified_files()
 				find_and_add_new_files()
-				dirty = True
-			if not deltas and dirty:
+				directoryData['uptodate'] = True
+			if not deltas and directoryData[targetDirectory]['uptodate']:
 				print targetDirectory, " - Up to date"
-				dirty = False
-			if time.time() > lastPush+pushDelay:
-				lastPush = time.time()
-				if targetDirectory not in directoriesLackingRemote:
+			if time.time() > directoryData['lastpush']+pushDelay:
+				if directoryData[targetDirectory]['hasremote']:
 					print "Pushing to master..."
 					push()
+					directoryData[targetDirectory]['lastpush'] = time.time()
 		time.sleep(checkDelay)
 
 run(targetDirectories)
