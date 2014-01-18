@@ -105,7 +105,7 @@ def check_if_git_repo(directory):
 	returnCode = subprocess.call(command, stdout=subprocess.PIPE)
 	if returnCode != 0:
 		print "ERROR: return code: %s\nIs %s a git repo?\n" %(returnCode, directory)
-		response = raw_input("> Would you like to initialize this directory as a deltar directory? (y or n)")
+		response = raw_input("Would you like to initialize this directory as a deltar directory? (y or n) >")
 		if response == 'y':
 			init_repo(directory)
 		else:
@@ -134,16 +134,19 @@ def push(branch="master"):
 	command = ["git", "push", "origin", "master"]
 	output = subprocess.check_output(command)
 
-defaultDir = os.path.abspath("./")
 
+# Default directory will be the directory deltar.py is run from
+# Change this to something else if you want, or just add target directories
+defaultDir = os.path.abspath("./")
 target_directories = [defaultDir]
 target_directories = clean_directories(target_directories)
+
+for d in target_directories:
+	print d, check_if_git_repo(d)
 
 print "Watching these directories: ", target_directories
 time.sleep(2)
 
-for d in target_directories:
-	print d, check_if_git_repo(d)
 
 PUSH_DELAY = 60
 lastPush = time.time()
