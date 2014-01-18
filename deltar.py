@@ -163,7 +163,13 @@ targetDirectories = [directory for directory in targetDirectories if check_if_gi
 print "Watching these directories: ", targetDirectories
 time.sleep(2)
 
-def run(targetDirectories, checkDelay=60, pushDelay=120, remotePresent=False):
+def run(targetDirectories, checkDelay=60, pushDelay=120):
+	'''
+	Run deltar on targetDirectories
+	Wait checkDelay between checking files
+	Wait pushDelay between pushing to master
+	'''
+
 	lastPush = time.time()
 	dirty = True
 
