@@ -108,11 +108,11 @@ def check_if_git_repo(directory):
 		response = raw_input("Would you like to initialize this directory as a deltar directory? (y or n) >")
 		if response == 'y':
 			init_repo(directory)
+			return True
 		else:
-			print "Exiting... please remove the directory from the list"
-			exit()
+			return False
 	else:
-		return "Good to go!"
+		return True
 
 def clean_directories(directories):
 	'''
@@ -141,8 +141,7 @@ defaultDir = os.path.abspath("./")
 target_directories = [defaultDir]
 target_directories = clean_directories(target_directories)
 
-for d in target_directories:
-	print d, check_if_git_repo(d)
+target_directories = [directory for directory in target_directories if check_if_git_repo(directory)]
 
 print "Watching these directories: ", target_directories
 time.sleep(2)
