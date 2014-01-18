@@ -186,7 +186,7 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 				directoryData['uptodate'] = True
 			if not deltas and directoryData[targetDirectory]['uptodate']:
 				print targetDirectory, " - Up to date"
-			if time.time() > directoryData['lastpush']+pushDelay:
+			if time.time() > directoryData[targetDirectory]['lastpush']+pushDelay:
 				if directoryData[targetDirectory]['hasremote']:
 					print "Pushing to master..."
 					push()
