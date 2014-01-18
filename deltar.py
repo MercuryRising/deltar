@@ -155,8 +155,6 @@ def has_remote(directory):
 	if output: return True
 	else: return False
 
-
-
 targetDirectories = clean_directories(targetDirectories)
 targetDirectories = [directory for directory in targetDirectories if check_if_git_repo(directory)]
 
