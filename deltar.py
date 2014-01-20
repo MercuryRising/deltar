@@ -157,16 +157,11 @@ def has_remote(directory):
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('deltar')
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger.setFormatter(formatter)
-
-logger.info("information")
-
 
 targetDirectories = clean_directories(targetDirectories)
 targetDirectories = [directory for directory in targetDirectories if check_if_git_repo(directory)]
 
-print "Watching these directories: ", targetDirectories
-time.sleep(2)
+logger.info(" Watching directories: " + " | ".join(targetDirectories))
 
 exit()
 
