@@ -153,6 +153,10 @@ def has_remote(directory):
 	if output: return True
 	else: return False
 
+
+logger = logging.getLogger('deltar')
+logger.setLevel(logging.DEBUG)
+
 targetDirectories = clean_directories(targetDirectories)
 targetDirectories = [directory for directory in targetDirectories if check_if_git_repo(directory)]
 
