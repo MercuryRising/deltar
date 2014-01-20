@@ -3,6 +3,7 @@ import os
 import subprocess
 import time
 import re
+import logging
 
 '''
 deltar - automatically track changes as you work.
@@ -156,12 +157,19 @@ def has_remote(directory):
 
 logger = logging.getLogger('deltar')
 logger.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+logger.info("Just info")
+logger.error("HOLY FUCK!")
+
 
 targetDirectories = clean_directories(targetDirectories)
 targetDirectories = [directory for directory in targetDirectories if check_if_git_repo(directory)]
 
 print "Watching these directories: ", targetDirectories
 time.sleep(2)
+
+exit()
 
 def run(targetDirectories, checkDelay=60, pushDelay=120):
 	'''
