@@ -154,11 +154,11 @@ def has_remote(directory):
 	if output: return True
 	else: return False
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('deltar')
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger.setLevel(logging.DEBUG)
 logger.info("Just info")
+logger.debug("debugging info")
 logger.error("HOLY FUCK!")
 
 
