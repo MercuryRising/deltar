@@ -191,8 +191,8 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 				# Wait to push changes after the changes have stopped for 
 				if time.time() > directoryData[targetDirectory]['lastdelta'] + 60*10:
 					logging.info(" Pushing to %s master" %targetDirectory)
-					#push()
+					push()
 					directoryData[targetDirectory]['lastpush'] = time.time()
 		time.sleep(checkDelay)
 
-run(targetDirectories, 5)
+run(targetDirectories, 120)
