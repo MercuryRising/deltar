@@ -21,7 +21,7 @@ def find_and_add_new_files():
 	output = subprocess.check_output(command)
 	newFiles = [f.strip() for f in output.splitlines() if f]
 	if newFiles:
-		print "New files to track: ", newFiles
+		logging.info(" Tracking the following new files: " + " ".join(newFiles))
 		for newFile in newFiles:
 			commit(newFile, "Adding new file %s"%newFile)
 
