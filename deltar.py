@@ -167,9 +167,10 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 	Wait checkDelay between checking files for changes
 	Wait pushDelay between pushing to master
 	'''
-	directoryData = {directory:{"lastpush":time.time(), "lastdelta":os.stat(directory)[stat.ST_MTIME], "uptodate":False, "remind":False} for directory in targetDirectories}
+	directoryData = {directory:{"lastpush":time.time(), "uptodate":False, "remind":False} for directory in targetDirectories}
 	for tarDir in targetDirectories:
 		directoryData[tarDir]['hasremote'] = has_remote(tarDir)
+		directoryData[tarDir]['lastdelta'] = os.stat(directory)[stat.ST_MTIME]
 	while True:
 		for targetDirectory in targetDirectories:
 			os.chdir(targetDirectory)
