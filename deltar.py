@@ -179,7 +179,7 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 			os.chdir(targetDirectory)
 			deltas = subprocess.check_output(["git","ls-files","-mo"])
 			if deltas:
-				logger.info("Files Changed since last commit:")
+				logger.info(" Files Changed since last commit:")
 				logger.info(deltas.strip())
 				find_and_commit_modified_files()
 				find_and_add_new_files()
