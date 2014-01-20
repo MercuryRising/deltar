@@ -157,9 +157,9 @@ def has_remote(directory):
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('deltar')
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger.info("Just info")
-logger.debug("debugging info")
-logger.error("HOLY FUCK!")
+logger.setFormatter(formatter)
+
+logger.info("information")
 
 
 targetDirectories = clean_directories(targetDirectories)
