@@ -7,11 +7,11 @@ import logging
 
 '''
 deltar - automatically track changes as you work.
-'''
 
-# Will default to using the current directory as the watched directory
-# Modify as needed
-targetDirectories = [os.path.abspath("./"), "~/blog/"]
+Will default to watch changes in the current working directory,
+add new directories to targetDirectories to modify watched locations
+'''
+targetDirectories = [os.path.abspath("./")]
 
 def find_and_add_new_files():
 	'''
