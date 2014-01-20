@@ -189,7 +189,7 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 
 			if directoryData[targetDirectory]['hasremote']:
 				# Wait to push changes after the changes have stopped for 
-				if time.time() > directoryData[targetDirectory]['lastdelta'] + 60*10:
+				if time.time() > directoryData[targetDirectory]['lastdelta'] + 60*5:
 					logging.info(" Pushing to %s master" %targetDirectory)
 					push()
 					directoryData[targetDirectory]['lastpush'] = time.time()
