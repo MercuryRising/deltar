@@ -161,9 +161,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 targetDirectories = clean_directories(targetDirectories)
 targetDirectories = [directory for directory in targetDirectories if check_if_git_repo(directory)]
 
-logger.info(" Watching directories: " + " | ".join(targetDirectories))
-
-exit()
+logger.info(" Watching directories: " + " ".join(targetDirectories))
 
 def run(targetDirectories, checkDelay=60, pushDelay=120):
 	'''
@@ -182,21 +180,21 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 			os.chdir(targetDirectory)
 			deltas = subprocess.check_output(["git","ls-files","-mo"])
 			if deltas:
-				print "Files Changed since last commit:"
-				print deltas.strip()
+				logger.info("Files Changed since last commit:")
+				logger.info(deltas.strip())
 				find_and_commit_modified_files()
 				find_and_add_new_files()
 				directoryData[targetDirectory]['uptodate'] = True
 				directoryData[targetDirectory]['remind'] = True
 
 			if not deltas and directoryData[targetDirectory]['remind']:
-				print targetDirectory, " - Up to date"
+				logger.info(targetDirectory + " - Up to date")
 				directoryData[targetDirectory]['remind'] = False
 
 			if directoryData[targetDirectory]['hasremote']:
 				if time.time() > directoryData[targetDirectory]['lastpush']+pushDelay:
 					print "Pushing to master..."
-					push()
+					#push()
 					directoryData[targetDirectory]['lastpush'] = time.time()
 		time.sleep(checkDelay)
 
