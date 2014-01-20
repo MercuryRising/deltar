@@ -188,10 +188,10 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 				directoryData[targetDirectory]['remind'] = False
 
 			if directoryData[targetDirectory]['hasremote']:
-				if time.time() > directoryData[targetDirectory]['lastdelta'] + 60*5:
+				if time.time() > directoryData[targetDirectory]['lastdelta'] + pushDelay:
 					logging.info(" Pushing to %s master" %targetDirectory)
 					push()
 					directoryData[targetDirectory]['lastpush'] = time.time()
 		time.sleep(checkDelay)
 
-run(targetDirectories, 120)
+run(targetDirectories, 120, 5)
