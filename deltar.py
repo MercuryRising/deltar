@@ -61,7 +61,7 @@ def get_modified_lines(filePath):
 		added, removed, fileName = subprocess.check_output(["git", "diff", "--numstat", filePath]).split()
 		
 		if added == removed and added == "-":
-			print "New binary file detected"
+			logging.log(" New binary file detected! This may not be a good thing to add...")
 			commitMessage = "New binary file! This is probably not a good thing to add..."
 		elif int(added):
 			addedLines = get_added_lines(filePath)
