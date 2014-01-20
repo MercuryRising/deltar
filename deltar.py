@@ -80,7 +80,6 @@ def get_modified_lines(filePath):
 def get_added_lines(filePath, allLines=False):
 	'''
 	Find the lines that were added to the file filePath.
-
 	'''
 	#print "Finding added lines in", filePath
 	command = ["git", "blame", filePath]
