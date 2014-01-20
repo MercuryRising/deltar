@@ -131,10 +131,10 @@ def check_if_git_setup():
 	command = ["git","config","--global","user.email"]
 	output = subprocess.check_output(command)
 	if not output:
-		print "You need to setup your email and name with the following commands:"
-		print "$ git config --global user.name your_name"
-		print "$ git config --global user.email your_email_address"
-		print "Do this and then run again."
+		commands = ["$ git config --global user.name your_name", "$ git config --global user.email your_email_address"
+		commands = "\n".join(commands)
+		logging.info(" git email or username not configured. Perform the following commands\n"+commands)
+		logging.info(" Do this and then run again.")
 		exit()
 
 def push(branch="master"):
