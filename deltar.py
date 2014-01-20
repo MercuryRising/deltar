@@ -73,7 +73,7 @@ def get_modified_lines(filePath):
 		#print "Committing %s with message %s" %(filePath, commitMessage)
 		commit(filePath, commitMessage)
 	else:
-		print "Detected deleted file, removing from git -> ", filePath
+		logging.info(" Detected deleted file, removing from git -> " + filePath)
 		subprocess.check_output(["git", "rm", filePath])
 
 def get_added_lines(filePath, allLines=False):
