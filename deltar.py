@@ -47,9 +47,6 @@ def commit(filePath, message):
 		logging.error(" unable to add file %s!" %filePath)
 	command = ["git", "commit", '''-m"%s"'''%message]
 	commitStatus = subprocess.call(command)
-	#print "Add status: %s Commit status: %s" %(addStatus, commitStatus)
-	#if not addStatus and not commitStatus:
-	#print filePath, " committed succesfully with message: ", message
 
 def get_modified_lines(filePath):
 	'''
