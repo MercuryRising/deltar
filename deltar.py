@@ -72,6 +72,7 @@ def get_modified_lines(filePath):
 		
 		#print "Committing %s with message %s" %(filePath, commitMessage)
 		commit(filePath, commitMessage)
+		
 	else:
 		logging.info(" Detected deleted file, removing from git: " + filePath)
 		subprocess.check_output(["git", "rm", filePath])
@@ -170,10 +171,9 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 	Wait pushDelay between pushing to master
 	'''
 
-	directoryData = {directory:{"lastpush":time.time(), "uptodate":False, "remind":False} for directory in targetDirectories}
+	directoryData = {directory:{"lastpush":time.time(), "lastdelta":time.time(), "uptodate":False, "remind":False} for directory in targetDirectories}
 	for tarDir in targetDirectories:
 		directoryData[tarDir]['hasremote'] = has_remote(tarDir)
-
 	while True:
 		for targetDirectory in targetDirectories:
 			os.chdir(targetDirectory)
@@ -185,13 +185,15 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 				find_and_add_new_files()
 				directoryData[targetDirectory]['uptodate'] = True
 				directoryData[targetDirectory]['remind'] = True
+				directoryData[targetDirectory]['lastdelta'] = time.time()
 
 			if not deltas and directoryData[targetDirectory]['remind']:
 				logger.info(" " +targetDirectory + " - Up to date")
 				directoryData[targetDirectory]['remind'] = False
 
 			if directoryData[targetDirectory]['hasremote']:
-				if time.time() > directoryData[targetDirectory]['lastpush']+pushDelay:
+				# Wait to push changes after the changes have stopped for 
+				if time.time() > directoryData[targetDirectory]['lastdelta'] + 60*10:
 					logging.info(" Pushing to %s master" %targetDirectory)
 					#push()
 					directoryData[targetDirectory]['lastpush'] = time.time()
