@@ -44,8 +44,7 @@ def commit(filePath, message):
 	command = ["git", "add", filePath]
 	addStatus = subprocess.call(command)
 	if addStatus:
-		print "An ERROR OCCURRED!"
-		#return None
+		logging.error(" unable to add file %s!" %filePath)
 	command = ["git", "commit", '''-m"%s"'''%message]
 	commitStatus = subprocess.call(command)
 	#print "Add status: %s Commit status: %s" %(addStatus, commitStatus)
