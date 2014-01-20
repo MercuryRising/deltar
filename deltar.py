@@ -187,7 +187,7 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 				directoryData[targetDirectory]['remind'] = True
 
 			if not deltas and directoryData[targetDirectory]['remind']:
-				logger.info(targetDirectory + " - Up to date")
+				logger.info(" " +targetDirectory + " - Up to date")
 				directoryData[targetDirectory]['remind'] = False
 
 			if directoryData[targetDirectory]['hasremote']:
