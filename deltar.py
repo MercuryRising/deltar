@@ -131,10 +131,11 @@ def check_if_git_setup():
 	command = ["git","config","--global","user.email"]
 	output = subprocess.check_output(command)
 	if not output:
-		commands = ["$ git config --global user.name your_name", "$ git config --global user.email your_email_address"
+		commands = ["$ git config --global user.name your_name", "$ git config --global user.email your_email_address"]
 		commands = "\n".join(commands)
-		logging.info(" git email or username not configured. Perform the following commands\n"+commands)
-		logging.info(" Do this and then run again.")
+		logging.error(" git email or username not configured.")
+		logging.info("Perform the following commands\n"+commands)
+		logging.info(" Do this and then run deltar again.\nTerminating...")
 		exit()
 
 def push(branch="master"):
@@ -191,7 +192,7 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 
 			if directoryData[targetDirectory]['hasremote']:
 				if time.time() > directoryData[targetDirectory]['lastpush']+pushDelay:
-					print "Pushing to master..."
+					logging.info(" Pushing to %s master" %targetDirectory)
 					#push()
 					directoryData[targetDirectory]['lastpush'] = time.time()
 		time.sleep(checkDelay)
