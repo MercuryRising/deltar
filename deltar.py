@@ -5,6 +5,7 @@ import subprocess
 import time
 import re
 import logging
+
 '''
 deltar - automatically track changes as you work.
 
