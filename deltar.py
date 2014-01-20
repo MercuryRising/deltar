@@ -1,10 +1,10 @@
 import sys
 import os
+import stat
 import subprocess
 import time
 import re
 import logging
-
 '''
 deltar - automatically track changes as you work.
 
@@ -166,8 +166,7 @@ def run(targetDirectories, checkDelay=60, pushDelay=120):
 	Wait checkDelay between checking files for changes
 	Wait pushDelay between pushing to master
 	'''
-
-	directoryData = {directory:{"lastpush":time.time(), "lastdelta":time.time(), "uptodate":False, "remind":False} for directory in targetDirectories}
+	directoryData = {directory:{"lastpush":time.time(), "lastdelta":os.stat(directory)[stat.ST_MTIME], "uptodate":False, "remind":False} for directory in targetDirectories}
 	for tarDir in targetDirectories:
 		directoryData[tarDir]['hasremote'] = has_remote(tarDir)
 	while True:
