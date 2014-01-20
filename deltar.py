@@ -12,7 +12,6 @@ deltar - automatically track changes as you work.
 # Modify as needed
 targetDirectories = [os.path.abspath("./"), "~/blog/"]
 
-
 def find_and_add_new_files():
 	'''
 	Find files that are untracked by git
